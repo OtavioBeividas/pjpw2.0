@@ -87,13 +87,6 @@ def criar_registro():
             existing_event = collection.find_one({"responseData.UrlEvento": event_id})
 
         if existing_event:
-            #if (responseData.get("status") != "published" or
-                    #(responseData.get("date", [{}])[0].get("status") != "available") or
-                    #datetime.datetime.strptime(responseData.get("date", [{}])[0].get("dateTime", {}).get("date", ""), "%d/%m/%Y") < datetime.datetime.now()):
-                #responseData["status"] = "Indisponivel"
-                #collection.update_one({"_id": existing_event["_id"]}, {"$set": {"responseData": responseData}})
-                #return jsonify({"message": "Evento atualizado para 'Indisponivel'."}), 200
-            #else:
             return jsonify({"message": "Evento já existe e não foi atualizado."}), 200
         else:
             collection.insert_one({"responseData": responseData})
@@ -172,7 +165,7 @@ def listar_registros():
         if date_datetime and date_datetime >= datetime.datetime.now():
             registros_formatados.append(extracted_data)
         else:
-            registros_formatados.append(extracted_data)
+            registros_formatados = []
 
     return jsonify(registros_formatados)
 
